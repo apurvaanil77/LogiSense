@@ -1,0 +1,59 @@
+### HEALTH CHECK
+GET http://localhost:8000/api/health
+Content-Type: application/json
+
+
+
+### INGEST EVENT (VALID REQUEST)
+POST http://localhost:8000/api/event
+Content-Type: application/json
+x-api-key: change-me
+
+{
+  "event_type": "deployment_created",
+  "deployment_id": "dep-{{$randomInt 0 50}}",
+  "component_name": "ingestion-api",
+  "status": "success",
+  "message": "Deployment initialized",
+  "payload": {
+    "details": "Example payload data"
+  }
+}
+
+### INGEST EVENT (VALID REQUEST)
+POST http://localhost:8000/api/event
+Content-Type: application/json
+x-api-key: change-me
+
+{
+  "event_type": "test-{{$randomInt 0 50}}",
+  "deployment_id": "dep-123",
+  "component_name": "ingestion-api",
+  "status": "success",
+  "message": "Deployment initialized",
+  "payload": {
+    "details": "Example payload data"
+  }
+}
+
+
+
+### INGEST EVENT (MISSING OR INVALID API KEY)
+POST http://localhost:8000/api/event
+Content-Type: application/json
+x-api-key: wrong-key
+
+{
+  "event_type": "test_event"
+}
+
+
+
+### INGEST EVENT (INVALID PAYLOAD – EXPECTS VALIDATION ERROR)
+POST http://localhost:8000/api/event
+Content-Type: application/json
+x-api-key: change-me
+
+{
+  "invalid_field": "oops"
+}

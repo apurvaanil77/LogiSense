@@ -1,0 +1,8 @@
+flask
+marshmallow
+redis
+celery
+sqlalchemy
+psycopg2-binary
+python-dotenv
+flask_cors

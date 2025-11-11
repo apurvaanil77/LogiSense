@@ -1,0 +1,84 @@
+############################################
+# 📊 ANALYTICS SERVICE – REST TEST SUITE
+# Base URL: http://localhost:8001/api
+############################################
+
+
+
+############################################
+# ✅ 1️⃣ HEALTH CHECK 
+############################################
+GET http://localhost:8001/api/health
+Content-Type: application/json
+
+
+
+############################################
+# ✅ 2️⃣ DEPLOYMENT COUNT – SUCCESS
+############################################
+GET http://localhost:8001/api/analytics/deployments/count
+Content-Type: application/json
+
+# ✅ Expected Response (200 OK)
+# {
+#   "deployment_count": 42
+# }
+
+
+
+############################################
+# ✅ 3️⃣ DEPLOYMENT COUNT – NO DATA
+############################################
+GET http://localhost:8001/api/analytics/deployments/count
+Content-Type: application/json
+
+# ✅ Expected Response (200 OK)
+# {
+#   "deployment_count": 0
+# }
+
+
+
+############################################
+# ✅ 4️⃣ RECENT ERRORS – SUCCESS
+############################################
+GET http://localhost:8001/api/analytics/errors/recent
+Content-Type: application/json
+
+# ✅ Expected Response (200 OK)
+# [
+#   {
+#     "id": 101,
+#     "message": "Database timeout",
+#     "component_name": "billing-service",
+#     "created_at": "2025-01-02T14:23:00Z"
+#   },
+#   {
+#     "id": 100,
+#     "message": "Null pointer exception",
+#     "component_name": "auth-service",
+#     "created_at": "2025-01-02T14:20:10Z"
+#   }
+# ]
+
+
+
+############################################
+# ✅ 5️⃣ RECENT ERRORS – NO ERROR EVENTS
+############################################
+GET http://localhost:8001/api/analytics/errors/recent
+Content-Type: application/json
+
+# ✅ Expected Response (200 OK)
+# []
+
+
+
+############################################
+# ✅ 6️⃣ INVALID ROUTE – ERROR HANDLING TEST
+############################################
+GET http://localhost:8001/api/analytics/errors/unknown
+Content-Type: application/json
+
+# ✅ Expected Response
+# 404 Not Found

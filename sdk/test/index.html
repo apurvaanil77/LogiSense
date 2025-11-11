@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>LogiSense SDK Test</h1>
+
+    <script type="module">
+      import LogiSense from "../logisense.js";
+
+      const data = {
+        event_type: "deployment_created",
+        deployment_id: "dep-123",
+        component_name: "ingestion-api",
+        status: "success",
+        message: "Deployment initialized",
+        payload: {
+          details: "Example payload data",
+        },
+      };
+
+      const client = new LogiSense({
+        apiKey: "change-me",
+        endpoint: "http://localhost:8000/api",
+      });
+
+      [...Array(10)].map((_, i) => {
+        client.send(data);
+      });
+
+      console.log("Event sent!");
+    </script>
+  </body>
+</html>
